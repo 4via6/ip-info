@@ -7,17 +7,30 @@ async function handleTerminalRequest() {
     try {
         const response = await fetch('https://ipapi.co/json/');
         const data = await response.json();
+        const formattedOffset = formatUTCOffset(data.utc_offset);
         // Return plain text format for terminal
         return `IP Address: ${data.ip}
 ASN: ${data.asn}
 ISP: ${data.org}
 Location: ${data.city}, ${data.region}, ${data.country_name}
-Timezone: ${data.timezone} (UTC${data.utc_offset})
+Timezone: ${data.timezone} (UTC${formattedOffset})
 Connection: ${window.location.protocol === 'https:' ? 'HTTPS' : 'HTTP'}
 IP Version: ${data.ip.includes(':') ? 'IPv6' : 'IPv4'}`;
     } catch (error) {
         return 'Error fetching IP information';
     }
+}
+
+// Add this new helper function
+function formatUTCOffset(offset) {
+    if (!offset) return '+00:00';
+    
+    // Handle the sign
+    const sign = offset.startsWith('-') ? '-' : '+';
+    // Remove any sign and ensure it's a 4-digit string
+    const digits = offset.replace(/[+-]/g, '').padStart(4, '0');
+    // Insert the colon
+    return `${sign}${digits.slice(0,2)}:${digits.slice(2)}`;
 }
 
 async function detectConnectionType() {
@@ -65,12 +78,13 @@ async function fetchIPInfo() {
         ]);
         
         const data = await ipResponse.json();
+        const formattedOffset = formatUTCOffset(data.utc_offset);
         
         document.getElementById('ip').textContent = data.ip;
         document.getElementById('asn').textContent = data.asn.replace(/^AS/, '');
         document.getElementById('isp').textContent = data.org;
         document.getElementById('location').textContent = `${data.city}, ${data.region}, ${data.country_name}`;
-        document.getElementById('timezone').textContent = `${data.timezone} (UTC${data.utc_offset})`;
+        document.getElementById('timezone').textContent = `${data.timezone} (UTC${formattedOffset})`;
         document.getElementById('connection').textContent = connectionType;
         document.getElementById('iptype').textContent = data.ip.includes(':') ? 'IPv6' : 'IPv4';
         document.getElementById('proxy').textContent = proxyStatus;
