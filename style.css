@@ -271,12 +271,51 @@ h1 {
     --theme-color-medium: rgba(94, 63, 222, 0.2);
 }
 
+.footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 1rem;
+    text-align: center;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+.footer a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.footer a:hover {
+    color: var(--theme-color);
+}
+
+.heart {
+    display: inline-block;
+    margin: 0 0.2rem;
+    animation: pulse 1.5s ease infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+/* Update mobile styles */
 @media (max-width: 480px) {
     .container {
         padding: 10px;
+        padding-bottom: 60px; /* Add space for footer */
     }
     
     .info-card {
         padding: 15px;
+    }
+
+    .footer {
+        padding: 0.8rem;
+        font-size: 0.8rem;
     }
 }
