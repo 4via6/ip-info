@@ -72,10 +72,21 @@ async function detectWebRTCLeak() {
 async function fetchIPInfo() {
     try {
         const [ipResponse, connectionType, proxyStatus] = await Promise.all([
-            fetch('https://ipapi.co/json/'),
+            fetch('https://ipapi.co/json/', {
+                headers: {
+                    'Accept': 'application/json',
+                    'User-Agent': 'IP-Info-Tool/1.0'
+                },
+                mode: 'cors'
+            }),
             detectConnectionType(),
             detectProxy()
         ]);
+        
+        // Add error check for Cloudflare rate limiting
+        if (ipResponse.status === 429) {
+            throw new Error('Rate limit exceeded. Please try again later.');
+        }
         
         const data = await ipResponse.json();
         const formattedOffset = formatUTCOffset(data.utc_offset);
@@ -91,9 +102,13 @@ async function fetchIPInfo() {
         
     } catch (error) {
         console.error('Error fetching info:', error);
+        const errorMessage = error.message === 'Rate limit exceeded. Please try again later.' 
+            ? error.message 
+            : 'Error loading data';
+            
         const elements = ['ip', 'asn', 'isp', 'location', 'timezone', 'connection', 'iptype', 'proxy'];
         elements.forEach(id => {
-            document.getElementById(id).textContent = 'Error loading data';
+            document.getElementById(id).textContent = errorMessage;
         });
     }
 }

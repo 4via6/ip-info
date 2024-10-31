@@ -1,3 +1,15 @@
+# Enable CORS
+Header set Access-Control-Allow-Origin "*"
+Header set Access-Control-Allow-Methods "GET, POST, OPTIONS"
+Header set Access-Control-Allow-Headers "Origin, X-Requested-With, Content-Type, Accept"
+
+# Security Headers
+Header always set X-Content-Type-Options "nosniff"
+Header always set X-Frame-Options "DENY"
+Header always set X-XSS-Protection "1; mode=block"
+Header always set Referrer-Policy "strict-origin-when-cross-origin"
+
+# Existing terminal detection code
 RewriteEngine On
 
 # Check if the request is from curl, wget, or similar tools
@@ -7,3 +19,7 @@ RewriteRule .* - [E=IS_TERMINAL:1]
 # Set content type based on user agent
 Header set Content-Type "text/plain" env=IS_TERMINAL
 Header set Content-Type "text/html" env=!IS_TERMINAL
+
+# Handle Cloudflare
+SetEnvIf CF-Connecting-IP . CFIP=$0
+Header set X-Real-IP "%{CFIP}e" env=CFIP
