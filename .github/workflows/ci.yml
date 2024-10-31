@@ -6,6 +6,8 @@ env:
   IMAGE_NAME: ip-info
   MANIFEST_REPO: git@github.com:Harsh-2002/argocd.git
   MANIFEST_PATH: k3s/arson/IP-Info/deployment.yaml
+  GIT_USER_EMAIL: "av7312002@gmail.com"
+  GIT_USER_NAME: "Harsh-2002"
 jobs:
   build-and-push:
     runs-on: [self-hosted, linux, x64]
@@ -15,6 +17,11 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: Configure Git
+        run: |
+          git config --global user.email "${{ env.GIT_USER_EMAIL }}"
+          git config --global user.name "${{ env.GIT_USER_NAME }}"
 
       - name: Get version
         id: version
