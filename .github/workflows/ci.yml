@@ -6,7 +6,7 @@ env:
   IMAGE_NAME: ip-info
 jobs:
   build-and-push:
-    runs-on: [self-hosted, argocd]
+    runs-on: [self-hosted]
     permissions:
       contents: read
       packages: write
