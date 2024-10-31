@@ -6,7 +6,7 @@ env:
   IMAGE_NAME: ip-info
 jobs:
   build-and-push:
-    runs-on: ubuntu-latest
+    runs-on: argocd
     permissions:
       contents: read
       packages: write
