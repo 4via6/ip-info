@@ -8,6 +8,7 @@ env:
   MANIFEST_PATH: k3s/arson/IP-Info/deployment.yaml
   GIT_USER_EMAIL: "av7312002@gmail.com"
   GIT_USER_NAME: "Harsh-2002"
+  TZ: "Asia/Kolkata"  # Set timezone to IST
 jobs:
   build-and-push:
     runs-on: [self-hosted, linux, x64]
@@ -23,18 +24,12 @@ jobs:
           git config --global user.email "${{ env.GIT_USER_EMAIL }}"
           git config --global user.name "${{ env.GIT_USER_NAME }}"
 
-      - name: Get version
-        id: version
+      - name: Generate IST timestamp tag
+        id: timestamp
         run: |
-          if [ ! -f version.txt ]; then
-            echo "1" > version.txt
-          fi
-          VERSION=$(cat version.txt)
-          echo "version=$VERSION" >> $GITHUB_OUTPUT
-          echo $((VERSION + 1)) > version.txt
-          git add version.txt
-          git commit -m "Bump version to $VERSION" || echo "No changes to commit"
-          git push || echo "No changes to push"
+          # Generate timestamp in IST
+          echo "tag=$(TZ='Asia/Kolkata' date +'%Y%m%d-%H%M%S')" >> $GITHUB_OUTPUT
+          echo "Using tag: $(TZ='Asia/Kolkata' date +'%Y%m%d-%H%M%S')"
 
       - name: Log into Docker Hub
         uses: docker/login-action@v3
@@ -47,7 +42,9 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/ip-info:v${{ steps.version.outputs.version }}
+          tags: |
+            ${{ secrets.DOCKERHUB_USERNAME }}/ip-info:${{ steps.timestamp.outputs.tag }}
+            ${{ secrets.DOCKERHUB_USERNAME }}/ip-info:latest
 
       - name: Clone and Update Manifest
         run: |
@@ -57,13 +54,13 @@ jobs:
           # Clone with SSH
           git clone $MANIFEST_REPO argocd
           
-          # Update manifest
+          # Update manifest with new tag
           cd argocd
-          sed -i "s|image: ${{ secrets.DOCKERHUB_USERNAME }}/ip-info:.*|image: ${{ secrets.DOCKERHUB_USERNAME }}/ip-info:v${{ steps.version.outputs.version }}|" $MANIFEST_PATH
+          sed -i "s|image: ${{ secrets.DOCKERHUB_USERNAME }}/ip-info:.*|image: ${{ secrets.DOCKERHUB_USERNAME }}/ip-info:${{ steps.timestamp.outputs.tag }}|" $MANIFEST_PATH
           
           # Commit and push changes
           git add $MANIFEST_PATH
-          git commit -m "Update ip-info to v${{ steps.version.outputs.version }}" || echo "No changes to commit"
+          git commit -m "Update ip-info to IST timestamp: ${{ steps.timestamp.outputs.tag }}" || echo "No changes to commit"
           git push || echo "No changes to push"
           
       - name: Sync ArgoCD Application
