@@ -1,3 +1,73 @@
+/* Theme variables */
+:root {
+    --theme-color: #5e3fde;
+    --theme-color-light: rgba(94, 63, 222, 0.15);  /* Slightly increased opacity */
+    --theme-color-medium: rgba(94, 63, 222, 0.25);  /* Slightly increased opacity */
+    
+    /* Light mode (default) */
+    --bg-color: #f8f9fa;
+    --card-bg: #ffffff;
+    --text-color: #333333;
+    --text-secondary: #666666;
+    --border-color: #eeeeee;
+    --shadow-color: rgba(94, 63, 222, 0.1);
+    --tooltip-bg: #333333;
+    --tooltip-color: #ffffff;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg-color: #0f0f0f;  /* Darker background for better contrast */
+        --card-bg: #1e1e1e;  /* Darker card background */
+        --text-color: #ffffff;
+        --text-secondary: #b0b0b0;
+        --border-color: #2c2c2c;  /* Darker border */
+        --shadow-color: rgba(0, 0, 0, 0.5);  /* Stronger shadow */
+        --tooltip-bg: #2c2c2c;
+        --tooltip-color: #ffffff;
+
+        /* Brighter theme colors for dark mode */
+        --theme-color: #6b4dff;  /* Adjusted purple for better visibility */
+        --theme-color-light: rgba(107, 77, 255, 0.2);
+        --theme-color-medium: rgba(107, 77, 255, 0.35);
+    }
+
+    /* Brighter status colors */
+    .info-item p[id="proxy"]:contains("Yes") {
+        --status-color: #ff8080;  /* Even brighter red */
+    }
+
+    .info-item p[id="proxy"]:contains("No") {
+        --status-color: #40ff9f;  /* Even brighter green */
+    }
+
+    /* Enhanced hover effect in dark mode */
+    .info-item:hover {
+        background: rgba(107, 77, 255, 0.15);  /* Slightly visible hover effect */
+        border-radius: 8px;
+    }
+
+    /* Enhanced copy icon in dark mode */
+    .copy-icon {
+        color: var(--theme-color);
+        opacity: 0.9;  /* Make icon slightly more visible */
+    }
+
+    .copy-icon:hover {
+        opacity: 1;
+        background: var(--theme-color-light);
+    }
+
+    .info-item h3 {
+        color: var(--theme-color);
+        opacity: 0.95;  /* Slightly reduce opacity for better readability */
+    }
+
+    .info-card {
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.7);  /* Stronger shadow in dark mode */
+    }
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -6,7 +76,7 @@
 }
 
 body {
-    background: #f8f9fa;
+    background: var(--bg-color);
     min-height: 100vh;
     display: flex;
     justify-content: center;
@@ -61,8 +131,7 @@ h1 {
 }
 
 .card small {
-    color: #666;
-    font-size: 0.8em;
+    color: var(--text-secondary);
 }
 
 .copied {
@@ -70,20 +139,20 @@ h1 {
 }
 
 @keyframes flash {
-    0% { background: rgba(94, 63, 222, 0.2); }
-    100% { background: rgba(94, 63, 222, 0.05); }
+    0% { background: var(--theme-color-medium); }
+    100% { background: var(--theme-color-light); }
 }
 
 .info-card {
-    background: white;
+    background: var(--card-bg);
     border-radius: 16px;
-    box-shadow: 0 4px 20px rgba(94, 63, 222, 0.1);
+    box-shadow: 0 4px 20px var(--shadow-color);
     padding: 25px;
 }
 
 .info-item {
     padding: 16px 20px;  /* updated padding */
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid var(--border-color);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -114,8 +183,8 @@ h1 {
 
 .tooltip {
     position: absolute;
-    background: #333;
-    color: white;
+    background: var(--tooltip-bg);
+    color: var(--tooltip-color);
     padding: 4px 8px;
     border-radius: 4px;
     font-size: 12px;
@@ -155,7 +224,7 @@ h1 {
 
 .info-item p {
     font-size: 1rem;
-    color: #333;
+    color: var(--text-color);
     word-break: break-word;  /* changed from break-all */
     line-height: 1.4;
 }
@@ -183,7 +252,7 @@ h1 {
 }
 
 .info-item:hover {
-    background: rgba(94, 63, 222, 0.05);
+    background: var(--theme-color-light);
     cursor: pointer;
     border-radius: 8px;
 }
