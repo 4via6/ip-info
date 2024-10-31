@@ -3,7 +3,7 @@ version: '3.8'
 services:
   ip-info:
     build: .
-    container_name: ip-info
+    container_name: firstfinger/ip-info:main
     ports:
       - "8080:80"
     volumes:
