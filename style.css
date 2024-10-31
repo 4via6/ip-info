@@ -1,0 +1,213 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
+
+body {
+    background: #f8f9fa;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.container {
+    width: 100%;
+    max-width: 500px;  /* reduced from 600px */
+    padding: 20px;
+}
+
+h1 {
+    color: #5e3fde;
+    margin-bottom: 30px;
+    font-size: 1.8rem;
+    text-align: center;
+    font-weight: 600;
+}
+
+.card-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.card {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.card h3 {
+    color: #1a73e8;
+    margin-bottom: 15px;
+}
+
+.card p {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+    word-break: break-all;
+}
+
+.card small {
+    color: #666;
+    font-size: 0.8em;
+}
+
+.copied {
+    animation: flash 0.5s;
+}
+
+@keyframes flash {
+    0% { background: rgba(94, 63, 222, 0.2); }
+    100% { background: rgba(94, 63, 222, 0.05); }
+}
+
+.info-card {
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(94, 63, 222, 0.1);
+    padding: 25px;
+}
+
+.info-item {
+    padding: 16px 20px;  /* updated padding */
+    border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;  /* increased from 5px */
+    transition: background-color 0.2s ease;
+}
+
+.info-content {
+    flex: 1;
+}
+
+.copy-icon {
+    position: relative;
+    color: var(--theme-color);
+    padding: 8px;
+    border-radius: 50%;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.copy-icon:hover {
+    background: var(--theme-color-light);
+}
+
+.copy-icon.copied {
+    animation: copied 0.8s ease;
+}
+
+.tooltip {
+    position: absolute;
+    background: #333;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    right: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    margin-right: 10px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+}
+
+.copy-icon:hover .tooltip {
+    opacity: 1;
+}
+
+@keyframes copied {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+}
+
+.info-item .fa-copy {
+    font-size: 1rem;
+}
+
+.info-item:last-child {
+    border-bottom: none;
+}
+
+.info-item h3 {
+    color: var(--theme-color);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 600;
+}
+
+.info-item p {
+    font-size: 1rem;
+    color: #333;
+    word-break: break-word;  /* changed from break-all */
+    line-height: 1.4;
+}
+
+.info-item p[id="proxy"] {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.info-item p[id="proxy"]::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--status-color, #999);
+}
+
+.info-item p[id="proxy"]:contains("Yes") {
+    --status-color: #ff4444;
+}
+
+.info-item p[id="proxy"]:contains("No") {
+    --status-color: #00c853;
+}
+
+.info-item:hover {
+    background: rgba(94, 63, 222, 0.05);
+    cursor: pointer;
+    border-radius: 8px;
+}
+
+/* Favicon styles for browsers that support SVG favicons */
+@media (prefers-color-scheme: dark) {
+    :root {
+        color-scheme: dark;
+    }
+}
+
+/* Update existing theme color usage */
+:root {
+    --theme-color: #5e3fde;
+    --theme-color-light: rgba(94, 63, 222, 0.1);
+    --theme-color-medium: rgba(94, 63, 222, 0.2);
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 10px;
+    }
+    
+    .info-card {
+        padding: 15px;
+    }
+}

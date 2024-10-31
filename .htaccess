@@ -1,0 +1,9 @@
+RewriteEngine On
+
+# Check if the request is from curl, wget, or similar tools
+RewriteCond %{HTTP_USER_AGENT} (curl|Wget|postman) [NC]
+RewriteRule .* - [E=IS_TERMINAL:1]
+
+# Set content type based on user agent
+Header set Content-Type "text/plain" env=IS_TERMINAL
+Header set Content-Type "text/html" env=!IS_TERMINAL

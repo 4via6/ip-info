@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Primary Meta Tags -->
+    <title>IP Info</title>
+    <meta name="title" content="IP Info">
+    <meta name="description" content="Get detailed information about your IP address, location, ISP, and network details instantly with IP Info tool.">
+    
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#5e3fde">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="apple-touch-icon" href="favicon.svg">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://ip.arson.me/">
+    <meta property="og:title" content="IP Info">
+    <meta property="og:description" content="Get detailed information about your IP address, location, ISP, and network details instantly with IP Info tool.">
+    <meta property="og:image" content="https://ip.arson.me/ip-info-homepage.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://ip.arson.me/">
+    <meta property="twitter:title" content="IP Info">
+    <meta property="twitter:description" content="Get detailed information about your IP address, location, ISP, and network details instantly with IP Info tool.">
+    <meta property="twitter:image" content="https://ip.arson.me/ip-info-homepage.png">
+    
+    <!-- Additional SEO Meta Tags -->
+    <meta name="keywords" content="ip address, ip lookup, network info, isp checker, ip location, ip tools">
+    <meta name="author" content="Arson">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://ip.arson.me/">
+    
+    <!-- Existing StyleSheets -->
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="info-card">
+            <div class="info-item" onclick="copyToClipboard('ip')">
+                <div class="info-content">
+                    <h3>IP Address</h3>
+                    <p id="ip">Loading...</p>
+                </div>
+                <div class="copy-icon">
+                    <i class="fas fa-copy"></i>
+                    <span class="tooltip">Copy</span>
+                </div>
+            </div>
+            <div class="info-item" onclick="copyToClipboard('asn')">
+                <div class="info-content">
+                    <h3>ASN Number</h3>
+                    <p id="asn">Loading...</p>
+                </div>
+                <div class="copy-icon">
+                    <i class="fas fa-copy"></i>
+                    <span class="tooltip">Copy</span>
+                </div>
+            </div>
+            <div class="info-item" onclick="copyToClipboard('isp')">
+                <div class="info-content">
+                    <h3>ISP</h3>
+                    <p id="isp">Loading...</p>
+                </div>
+                <div class="copy-icon">
+                    <i class="fas fa-copy"></i>
+                    <span class="tooltip">Copy</span>
+                </div>
+            </div>
+            <div class="info-item" onclick="copyToClipboard('location')">
+                <div class="info-content">
+                    <h3>Location</h3>
+                    <p id="location">Loading...</p>
+                </div>
+                <div class="copy-icon">
+                    <i class="fas fa-copy"></i>
+                    <span class="tooltip">Copy</span>
+                </div>
+            </div>
+            <div class="info-item" onclick="copyToClipboard('timezone')">
+                <div class="info-content">
+                    <h3>Timezone</h3>
+                    <p id="timezone">Loading...</p>
+                </div>
+                <div class="copy-icon">
+                    <i class="fas fa-copy"></i>
+                    <span class="tooltip">Copy</span>
+                </div>
+            </div>
+            <div class="info-item" onclick="copyToClipboard('connection')">
+                <div class="info-content">
+                    <h3>Connection Type</h3>
+                    <p id="connection">Loading...</p>
+                </div>
+                <div class="copy-icon">
+                    <i class="fas fa-copy"></i>
+                    <span class="tooltip">Copy</span>
+                </div>
+            </div>
+            <div class="info-item" onclick="copyToClipboard('iptype')">
+                <div class="info-content">
+                    <h3>IP Version</h3>
+                    <p id="iptype">Loading...</p>
+                </div>
+                <div class="copy-icon">
+                    <i class="fas fa-copy"></i>
+                    <span class="tooltip">Copy</span>
+                </div>
+            </div>
+            <div class="info-item" onclick="copyToClipboard('proxy')">
+                <div class="info-content">
+                    <h3>Proxy Status</h3>
+                    <p id="proxy">Loading...</p>
+                </div>
+                <div class="copy-icon">
+                    <i class="fas fa-copy"></i>
+                    <span class="tooltip">Copy</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
