@@ -86,8 +86,13 @@ body {
 
 .container {
     width: 100%;
-    max-width: 500px;  /* reduced from 600px */
+    max-width: 500px;
     padding: 20px;
+    margin: 0 auto;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 h1 {
@@ -144,24 +149,28 @@ h1 {
 }
 
 .info-card {
+    width: 100%;
     background: var(--card-bg);
     border-radius: 16px;
     box-shadow: 0 4px 20px var(--shadow-color);
-    padding: 25px;
+    padding: clamp(15px, 5vw, 25px);
+    margin-bottom: 50px; /* Space for footer */
 }
 
 .info-item {
-    padding: 16px 20px;  /* updated padding */
+    padding: clamp(12px, 3vw, 16px) clamp(15px, 4vw, 20px);
     border-bottom: 1px solid var(--border-color);
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 8px;  /* increased from 5px */
+    gap: clamp(6px, 2vw, 8px);
     transition: background-color 0.2s ease;
+    min-height: 60px; /* Ensure consistent height */
 }
 
 .info-content {
     flex: 1;
+    min-width: 0; /* Prevent flex item from overflowing */
 }
 
 .copy-icon {
@@ -216,16 +225,17 @@ h1 {
 
 .info-item h3 {
     color: var(--theme-color);
-    font-size: 0.85rem;
+    font-size: clamp(0.75rem, 2vw, 0.85rem);
     text-transform: uppercase;
     letter-spacing: 0.5px;
     font-weight: 600;
 }
 
 .info-item p {
-    font-size: 1rem;
+    font-size: clamp(0.875rem, 2.5vw, 1rem);
     color: var(--text-color);
-    word-break: break-word;  /* changed from break-all */
+    overflow-wrap: break-word;
+    word-break: break-word;
     line-height: 1.4;
 }
 
@@ -305,17 +315,47 @@ h1 {
 
 /* Update mobile styles */
 @media (max-width: 480px) {
+    body {
+        padding: 10px;
+    }
+
     .container {
         padding: 10px;
-        padding-bottom: 60px; /* Add space for footer */
     }
     
     .info-card {
-        padding: 15px;
+        margin-bottom: 40px;
+    }
+
+    .copy-icon {
+        padding: 6px;
+    }
+
+    .tooltip {
+        display: none; /* Hide tooltips on mobile */
     }
 
     .footer {
-        padding: 0.8rem;
+        position: fixed;
+        bottom: 0;
+        padding: 8px;
+        background: var(--bg-color);
+        font-size: 0.75rem;
+    }
+}
+
+/* Add styles for very small screens */
+@media (max-width: 320px) {
+    .info-item {
+        padding: 10px 12px;
+        min-height: 50px;
+    }
+
+    .info-item p {
         font-size: 0.8rem;
+    }
+
+    .info-item h3 {
+        font-size: 0.7rem;
     }
 }
