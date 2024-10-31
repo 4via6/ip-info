@@ -4,6 +4,8 @@ on:
     branches: main 
 env:
   IMAGE_NAME: ip-info
+  MANIFEST_REPO: git@github.com:Harsh-2002/argocd.git
+  MANIFEST_PATH: k3s/arson/IP-Info/deployment.yaml
 jobs:
   build-and-push:
     runs-on: [self-hosted, linux, x64]
@@ -13,30 +15,49 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: Get version
+        id: version
+        run: |
+          if [ ! -f version.txt ]; then
+            echo "1" > version.txt
+          fi
+          VERSION=$(cat version.txt)
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo $((VERSION + 1)) > version.txt
+          git add version.txt
+          git commit -m "Bump version to $VERSION" || echo "No changes to commit"
+          git push || echo "No changes to push"
+
       - name: Log into Docker Hub
         uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Extract metadata
-        id: meta
-        uses: docker/metadata-action@v5
-        with:
-          images: ${{ secrets.DOCKERHUB_USERNAME }}/ip-info
-          tags: |
-            type=ref,event=branch
-            type=ref,event=pr
-            type=semver,pattern={{version}}
-            type=semver,pattern={{major}}.{{minor}}
-            type=sha
-
       - name: Build and push
         uses: docker/build-push-action@v6
         with:
           context: .
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/ip-info:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/ip-info:v${{ steps.version.outputs.version }}
+
+      - name: Clone and Update Manifest
+        run: |
+          # Ensure clean state
+          rm -rf argocd || true
+          
+          # Clone with SSH
+          git clone $MANIFEST_REPO argocd
+          
+          # Update manifest
+          cd argocd
+          sed -i "s|image: ${{ secrets.DOCKERHUB_USERNAME }}/ip-info:.*|image: ${{ secrets.DOCKERHUB_USERNAME }}/ip-info:v${{ steps.version.outputs.version }}|" $MANIFEST_PATH
+          
+          # Commit and push changes
+          git add $MANIFEST_PATH
+          git commit -m "Update ip-info to v${{ steps.version.outputs.version }}" || echo "No changes to commit"
+          git push || echo "No changes to push"
           
       - name: Sync ArgoCD Application
         run: |
