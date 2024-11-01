@@ -8,7 +8,7 @@ env:
   MANIFEST_PATH: k3s/arson/IP-Info/deployment.yaml
   GIT_USER_EMAIL: "av7312002@gmail.com"
   GIT_USER_NAME: "Harsh-2002"
-  TZ: "Asia/Kolkata"  # Set timezone to IST
+  TZ: "Asia/Kolkata" 
 jobs:
   build-and-push:
     runs-on: [self-hosted, linux, x64]

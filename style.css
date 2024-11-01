@@ -316,36 +316,44 @@ h1 {
 /* Update mobile styles */
 @media (max-width: 480px) {
     body {
-        padding: 10px;
+        padding: 0;
+        align-items: flex-start; /* Align content to top */
     }
 
     .container {
-        padding: 10px;
+        padding: 16px;
+        justify-content: flex-start; /* Align content to top */
+        min-height: auto; /* Remove min-height constraint */
     }
     
     .info-card {
-        margin-bottom: 40px;
+        margin-top: 10px; /* Add some space from top */
+        margin-bottom: 60px; /* Space for footer */
+        border-radius: 12px; /* Slightly reduced border radius */
     }
 
-    .copy-icon {
-        padding: 6px;
-    }
-
-    .tooltip {
-        display: none; /* Hide tooltips on mobile */
+    .info-item {
+        padding: 14px 16px; /* Consistent padding */
     }
 
     .footer {
-        position: fixed;
-        bottom: 0;
-        padding: 8px;
+        padding: 12px;
         background: var(--bg-color);
-        font-size: 0.75rem;
+        border-top: 1px solid var(--border-color);
     }
 }
 
 /* Add styles for very small screens */
 @media (max-width: 320px) {
+    .container {
+        padding: 12px;
+    }
+    
+    .info-card {
+        margin-top: 8px;
+        margin-bottom: 50px;
+    }
+
     .info-item {
         padding: 10px 12px;
         min-height: 50px;
