@@ -317,19 +317,20 @@ h1 {
 @media (max-width: 480px) {
     body {
         padding: 0;
-        align-items: flex-start; /* Align content to top */
+        align-items: flex-start;
     }
 
     .container {
         padding: 16px;
-        justify-content: flex-start; /* Align content to top */
-        min-height: auto; /* Remove min-height constraint */
+        padding-top: 24px; /* Increased top padding */
+        justify-content: flex-start;
+        min-height: auto;
     }
     
     .info-card {
-        margin-top: 10px; /* Add some space from top */
-        margin-bottom: 60px; /* Space for footer */
-        border-radius: 12px; /* Slightly reduced border radius */
+        margin-top: 20px; /* Increased top margin */
+        margin-bottom: 60px;
+        border-radius: 12px;
     }
 
     .info-item {
@@ -347,10 +348,11 @@ h1 {
 @media (max-width: 320px) {
     .container {
         padding: 12px;
+        padding-top: 20px; /* Increased top padding for smaller screens */
     }
     
     .info-card {
-        margin-top: 8px;
+        margin-top: 16px; /* Adjusted for smaller screens */
         margin-bottom: 50px;
     }
 
