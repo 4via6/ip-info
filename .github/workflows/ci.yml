@@ -3,29 +3,32 @@ name: Build and Push Docker Image
 on:
   push:
     branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
 
 jobs:
   build-and-push:
-    runs-on: srvr
+    runs-on: self-hosted
 
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
 
-    - name: Build Docker image
-      run: |
-        sudo docker build \
-          --network host \
-          -t registry.srvr.site/ip-info:latest \
-          -f Dockerfile .
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
 
-    - name: Push Docker image
-      run: |
-        sudo docker push registry.srvr.site/ip-info:latest
+    - name: Login to Docker Registry
+      uses: docker/login-action@v3
+      with:
+        registry: registry.srvr.site
+        username: ${{ secrets.DOCKER_USERNAME_SRVR }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
 
-    - name: Trigger Portainer Webhook
-      run: |
-        curl -X POST https://portainer.srvr.site/api/stacks/webhooks/644d1d9d-f626-46ae-88fe-bf29170d9bf0
+    - name: Build and push Docker image
+      uses: docker/build-push-action@v5
+      with:
+        context: .
+        file: ./Dockerfile
+        push: true
+        tags: |
+          registry.srvr.site/ip-info:latest
+          registry.srvr.site/ip-info:${{ github.sha }}
   
