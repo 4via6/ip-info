@@ -3,8 +3,6 @@ name: Build and Push Docker Image
 on:
   push:
     branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
 
 jobs:
   build-and-push:
@@ -18,7 +16,7 @@ jobs:
       uses: docker/login-action@v3
       with:
         registry: registry.srvr.site
-        username: ${{ secrets.DOCKER_USERNAME }}
+        username: ${{ secrets.DOCKER_USERNAME_SRVR }}
         password: ${{ secrets.DOCKER_PASSWORD }}
 
     - name: Build and push Docker image
